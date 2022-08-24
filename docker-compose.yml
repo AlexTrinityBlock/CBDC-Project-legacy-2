@@ -40,7 +40,7 @@ services:
     #與容器外的資料夾共通的部分
     #容器外的/codes/bank/backend-server/laravel對應到容器內的
     volumes:
-      - ./codes/bank/backend-server/laravel:/var/www/html/
+      - ./codes/bank/backend-server/laravel:/app
     # 開啟 8080 port 對外，對應到內部的80port
     ports:
       - "8081:80"
@@ -73,7 +73,7 @@ services:
     #網路IP設置
     networks:
       devnetwork:
-        ipv4_address: 10.0.0.4
+        ipv4_address: 10.0.0.3
 
   #########
   #銀行Redis#
@@ -88,7 +88,7 @@ services:
     #網路IP設置
     networks:
       devnetwork:
-        ipv4_address: 10.0.0.5
+        ipv4_address: 10.0.0.4
 
 networks:
   #網路名稱為devnetwork，該名稱可以變更。

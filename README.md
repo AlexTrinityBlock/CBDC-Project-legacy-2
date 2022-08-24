@@ -15,16 +15,30 @@ docker-compose up -d
 
 首次啟動會調用大量CPU，並且執行很久，這是正常的，請耐心等待。
 
-## 關閉容器
+### 關閉容器
 
 ```
 docker-compose stop
 ```
 
-## 刪除容器
+### 刪除容器
 
 ```
 docker-compose down
+```
+
+## 3. 建立資料庫
+
+登入容器
+
+```
+docker compose exec -it bank-backend-database bash  
+```
+
+建立資料庫
+
+```
+mysql -uroot -pdev -e "CREATE DATABASE bankdb /*\!40100 DEFAULT CHARACTER SET utf8 */;"
 ```
 
 # Laravel 相關指令
