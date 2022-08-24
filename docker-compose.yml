@@ -45,7 +45,7 @@ services:
     ports:
       - "8081:80"
     # 啟動後指令
-    command: " "
+    command: "/bin/sh init"
     #網路IP設置
     networks:
       devnetwork:

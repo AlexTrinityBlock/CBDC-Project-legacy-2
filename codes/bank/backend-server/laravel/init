@@ -1,0 +1,7 @@
+#/bin/sh
+
+# 當已經裝有依賴組件時，則啟動伺服器
+[ -d "./vendor" ] && php artisan serve --host=0.0.0.0 --port=80
+
+# 若無，則先安裝依賴組件，之後啟動伺服器。
+[ ! -d "/vendor" ] && composer install --ignore-platform-reqs && php artisan serve --host=0.0.0.0 --port=80
