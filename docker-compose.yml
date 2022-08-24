@@ -43,9 +43,9 @@ services:
       - ./codes/bank/backend-server/laravel:/var/www/html/
     # 開啟 8080 port 對外，對應到內部的80port
     ports:
-      - "8081:8000"
+      - "8081:80"
     # 啟動後指令
-    command: "php artisan serve --host=0.0.0.0 --port=8000"
+    command: " "
     #網路IP設置
     networks:
       devnetwork:
