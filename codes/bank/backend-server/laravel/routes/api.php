@@ -22,4 +22,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // 使用者訊息路由組
 Route::controller(UserController::class)->group(function () {
     Route::get('/user', 'index');
+    Route::get('/user/login', 'login');
+    Route::get('/user/logout', 'logout');
 });
