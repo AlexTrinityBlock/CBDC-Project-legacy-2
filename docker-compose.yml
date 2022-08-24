@@ -1,0 +1,100 @@
+#docker-compose版本
+version: "3.4"
+#服務，每個功能或容器就是一個服務。
+services:
+
+  #########
+  #銀行前端#
+  #########
+  #服務名稱
+  bank-frontend-apache:
+    #這個是我們的映像檔名稱，可以自己選擇，或者使用現有映像檔
+    image: httpd:2.4
+    # image: nginx
+    #要啟動這個，才能在關閉終端後仍然繼續運作容器
+    tty: true
+    #與容器外的資料夾共通的部分
+    volumes:
+      - ./codes/bank/frontend-server/web:/usr/local/apache2/htdocs/:ro
+    # 開啟 8080 port 對外，對應到內部的80port
+    ports:
+      - "8080:80"
+    # 啟動後指令
+    # command: ""
+    #網路IP設置
+    networks:
+      devnetwork:
+        ipv4_address: 10.0.0.1
+
+  ###############
+  #銀行後端Server#*
+  ###############
+  #服務名稱
+  bank-backend-server:
+    #這個是我們的映像檔名稱，可以自己選擇，或者使用現有映像檔
+    image: bank-backend-server:0.0
+    #用在這個資料夾下的Dockerfile建立映像檔
+    build: ./dockerfiles/bank/backend/apache
+    #要啟動這個，才能在關閉終端後仍然繼續運作容器
+    tty: true
+    #與容器外的資料夾共通的部分
+    #容器外的/codes/bank/backend-server/laravel對應到容器內的
+    volumes:
+      - ./codes/bank/backend-server/laravel:/var/www/html/
+    # 開啟 8080 port 對外，對應到內部的80port
+    ports:
+      - "8081:8000"
+    # 啟動後指令
+    command: "php artisan serve --host=0.0.0.0 --port=8000"
+    #網路IP設置
+    networks:
+      devnetwork:
+        ipv4_address: 10.0.0.2
+
+  #########
+  #銀行資料庫#
+  #########
+  #服務名稱
+  bank-backend-database:
+    #這個是我們的映像檔名稱，可以自己選擇，或者使用現有映像檔
+    image: bank-backend-database:0.0
+    #用在這個資料夾下的Dockerfile建立映像檔
+    build: ./dockerfiles/bank/database
+    #要啟動這個，才能在關閉終端後仍然繼續運作容器
+    tty: true
+    #與容器外的資料夾共通的部分
+    environment:
+      MYSQL_ROOT_PASSWORD: dev
+    # 開啟 8082 port 對外，對應到內部的3306port
+    ports:
+      - "8083:3306"
+    # 啟動後指令
+    command: ""
+    #網路IP設置
+    networks:
+      devnetwork:
+        ipv4_address: 10.0.0.4
+
+  #########
+  #銀行Redis#
+  #########
+  #服務名稱
+  bank-backend-redis:
+    #這個是我們的映像檔名稱，可以自己選擇，或者使用現有映像檔
+    image: redis:6.2-alpine
+    ports:
+      - '8084:6379'
+    command: redis-server --requirepass dev
+    #網路IP設置
+    networks:
+      devnetwork:
+        ipv4_address: 10.0.0.5
+
+networks:
+  #網路名稱為devnetwork，該名稱可以變更。
+  devnetwork:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 10.0.0.0/16
+         gateway: 10.0.0.254
