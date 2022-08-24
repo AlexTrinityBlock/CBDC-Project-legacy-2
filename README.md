@@ -27,18 +27,15 @@ docker-compose stop
 docker-compose down
 ```
 
-
 # Laravel 相關指令
-
-
-
-## 安裝Laravel依賴組件
 
 用Shell命令行連入容器群後才可以使用下列指令:
 
 ```
 docker compose exec -it bank-backend-server bash
 ```
+
+## 安裝Laravel依賴組件
 
 ```
 composer install --ignore-platform-reqs
