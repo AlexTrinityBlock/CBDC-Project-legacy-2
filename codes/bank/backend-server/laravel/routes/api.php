@@ -2,7 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Cache;
+use App\Http\Controllers\UserController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -19,14 +20,20 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-Route::get('/test1', function (){
-    Cache::put('key', 'Test', $seconds = 3600);
-    $value = Cache::get('key');
-    return $value ;
+Route::controller(UserController::class)->group(function () {
+    Route::get('/login', 'login');
+    Route::get('/logout', 'logout');
+    Route::get('/checklogin', 'checklogin');
 });
 
-Route::get('/test2', function (){
-    $value = Cache::get('key');
-    return $value ;
-});
+
+// Route::get('/test1', function (){
+//     Cache::put('key', 'Test', $seconds = 3600);
+//     $value = Cache::get('key');
+//     return $value ;
+// });
+
+// Route::get('/test2', function (){
+//     $value = Cache::get('key');
+//     return $value ;
+// });
