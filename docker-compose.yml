@@ -15,7 +15,7 @@ services:
     tty: true
     #與容器外的資料夾共通的部分
     volumes:
-      - ./codes/bank/frontend-server/web:/usr/local/apache2/htdocs/:ro
+      - ./codes/bank/frontend-server/web/build:/usr/local/apache2/htdocs/:ro
     # 開啟 8080 port 對外，對應到內部的80port
     ports:
       - "8080:80"

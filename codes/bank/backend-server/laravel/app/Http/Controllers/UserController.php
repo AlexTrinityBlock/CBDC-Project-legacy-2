@@ -30,7 +30,8 @@ class UserController extends Controller
         // 設置回傳內容
         $result = [
             'status' => 'success',
-            'code' => '1'
+            'code' => '1',
+            'token' => $uuid,
         ];
 
         // 回應
@@ -71,6 +72,11 @@ class UserController extends Controller
         $resul = [];
 
         $token = $request->cookie('token');
+
+        if($token == null){
+            $token = $request->input('token');
+        }
+
         $tokenInCache = Cache::get($token);
 
         if ($tokenInCache == 'logined'){
@@ -79,6 +85,7 @@ class UserController extends Controller
             $result = [
                 'status' => 'Logined',
                 'code' => '1',
+                'token' => $request->input('token')
             ];
 
         }else{
@@ -87,6 +94,7 @@ class UserController extends Controller
             $result = [
                 'status' => 'Not Logined',
                 'code' => '0',
+                'token' => $request->input('token')
             ];
 
         }
