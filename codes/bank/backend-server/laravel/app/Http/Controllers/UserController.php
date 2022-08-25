@@ -17,15 +17,13 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function login(Request $request)
+    public function login($user,$password)
     {
-        $user = $request->input('user');
-        $password = $request->input('password');
+        // $user = $request->input('user');
+        // $password = $request->input('password');
         $uuid = Str::uuid();
 
         Cache::put($uuid, 'logined' , $seconds = 3600);
-        $cookie = cookie('token', $uuid, $minutes = 60);
-
 
         // 設置回傳內容
         $result = [
@@ -35,7 +33,7 @@ class UserController extends Controller
         ];
 
         // 回應
-        return response()->json($result)->cookie($cookie);
+        return response()->json($result);
     }
 
     /**

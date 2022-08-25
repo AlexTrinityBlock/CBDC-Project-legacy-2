@@ -26,9 +26,9 @@ function Login() {
         
         console.log("submitted");
 
-        fetch("http://localhost:8081/api/login", {
-            method: "GET",
-            // body: {"Send":"Test"}
+        fetch("http://localhost:8081/api/login/user/Tom/password/123", {
+            method: "get",
+            // body: {"user":"Tom"}
         }).then((response) => {
             console.log(response);
             return response.json(); // do something with response JSON
@@ -36,7 +36,7 @@ function Login() {
             console.log(jsonObj.code);
             console.log(jsonObj.token);
             Cookies.set('token',jsonObj.token);
-            window.location.href = "./";
+            // window.location.href = "./";
         });
     };
 
